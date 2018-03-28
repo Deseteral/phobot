@@ -12,7 +12,7 @@ public class TelegramClient {
     private String token;
 
     public TelegramClient(
-            @Value("TELEGRAM_TOKEN") String token
+            @Value("${TELEGRAM_TOKEN}") String token
     ) {
         this.restTemplate = new RestTemplate();
         this.token = token;
