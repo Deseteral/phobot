@@ -19,6 +19,7 @@ public class TelegramClient {
     }
 
     public void sendMessage(OutgoingMessage message) {
+        System.out.println(url("/sendMessage"));
         restTemplate.postForObject(
                 url("/sendMessage"),
                 message,
