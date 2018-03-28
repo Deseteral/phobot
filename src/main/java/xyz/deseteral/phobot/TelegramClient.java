@@ -18,8 +18,10 @@ public class TelegramClient {
     }
 
     public void sendMessage(OutgoingMessage message) {
-        System.out.println();
+        System.out.println("yyyyyy");
         System.out.println(url("/sendMessage"));
+        System.out.println(message.getChatId());
+        System.out.println(message.getText());
         System.out.println();
 
         HttpHeaders headers = new HttpHeaders();
