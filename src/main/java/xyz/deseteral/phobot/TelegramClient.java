@@ -27,15 +27,15 @@ public class TelegramClient {
         HttpEntity<OutgoingMessage> entity = new HttpEntity<>(message, headers);
 
 
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<TelegramResponse> response = restTemplate.exchange(
                 url("/sendMessage"),
                 HttpMethod.POST,
                 entity,
-                String.class
+                TelegramResponse.class
         );
 
-        System.out.println();
-        System.out.println(response);
+        System.out.println("xxxxxx");
+        System.out.println(response.getBody().getDescription());
         System.out.println();
 
 //        ResponseEntity<String> response = restTemplate.postForObject(
