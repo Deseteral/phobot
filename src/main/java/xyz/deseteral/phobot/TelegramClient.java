@@ -1,10 +1,7 @@
 package xyz.deseteral.phobot;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,16 +18,31 @@ public class TelegramClient {
     }
 
     public void sendMessage(OutgoingMessage message) {
+        System.out.println();
         System.out.println(url("/sendMessage"));
+        System.out.println();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<OutgoingMessage> entity = new HttpEntity<>(message, headers);
-        restTemplate.postForObject(
+
+
+        ResponseEntity<String> response = restTemplate.exchange(
                 url("/sendMessage"),
+                HttpMethod.POST,
                 entity,
-                Void.class
+                String.class
         );
+
+        System.out.println();
+        System.out.println(response);
+        System.out.println();
+
+//        ResponseEntity<String> response = restTemplate.postForObject(
+//                url("/sendMessage"),
+//                entity,
+//                String.class
+//        );
     }
 
     private String url(String path) {
