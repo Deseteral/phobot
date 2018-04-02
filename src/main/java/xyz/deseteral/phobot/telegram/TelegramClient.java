@@ -1,9 +1,10 @@
-package xyz.deseteral.phobot;
+package xyz.deseteral.phobot.telegram;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import xyz.deseteral.phobot.telegram.model.OutgoingMessage;
 
 @Component
 public class TelegramClient {
