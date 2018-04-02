@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OutgoingMessage {
-    private int chatId;
+
+    @JsonProperty("chat_id")
+    private long chatId;
+
+    @JsonProperty("text")
     private String text;
 
-    @JsonCreator
-    public OutgoingMessage(
-            @JsonProperty("chat_id") int chatId,
-            @JsonProperty("text") String text
-    ) {
+    public OutgoingMessage(long chatId, String text) {
         this.chatId = chatId;
         this.text = text;
     }
 
-    public int getChatId() {
+    public long getChatId() {
         return chatId;
     }
 

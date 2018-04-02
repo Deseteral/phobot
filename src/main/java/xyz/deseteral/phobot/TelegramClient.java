@@ -18,33 +18,16 @@ public class TelegramClient {
     }
 
     public void sendMessage(OutgoingMessage message) {
-        System.out.println("yyyyyy");
-        System.out.println(url("/sendMessage"));
-        System.out.println(message.getChatId());
-        System.out.println(message.getText());
-        System.out.println();
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<OutgoingMessage> entity = new HttpEntity<>(message, headers);
 
-
-        ResponseEntity<TelegramResponse> response = restTemplate.exchange(
+        restTemplate.exchange(
                 url("/sendMessage"),
                 HttpMethod.POST,
                 entity,
-                TelegramResponse.class
+                Void.class
         );
-
-        System.out.println("xxxxxx");
-        System.out.println(response.getBody().getDescription());
-        System.out.println();
-
-//        ResponseEntity<String> response = restTemplate.postForObject(
-//                url("/sendMessage"),
-//                entity,
-//                String.class
-//        );
     }
 
     private String url(String path) {
