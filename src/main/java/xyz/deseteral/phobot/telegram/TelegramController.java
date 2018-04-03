@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import xyz.deseteral.phobot.invocation.InvocationProcessor;
+import xyz.deseteral.phobot.invocation.MainInvocationProcessor;
 import xyz.deseteral.phobot.invocation.model.Invocation;
 import xyz.deseteral.phobot.invocation.model.Response;
 import xyz.deseteral.phobot.telegram.model.OutgoingMessage;
@@ -16,12 +16,12 @@ import xyz.deseteral.phobot.telegram.model.Update;
 @RequestMapping("/adapter/telegram")
 public class TelegramController {
     private final TelegramClient client;
-    private final InvocationProcessor invocationProcessor;
+    private final MainInvocationProcessor mainInvocationProcessor;
 
     @Autowired
-    public TelegramController(TelegramClient client, InvocationProcessor invocationProcessor) {
+    public TelegramController(TelegramClient client, MainInvocationProcessor mainInvocationProcessor) {
         this.client = client;
-        this.invocationProcessor = invocationProcessor;
+        this.mainInvocationProcessor = mainInvocationProcessor;
     }
 
     @PostMapping
@@ -30,7 +30,7 @@ public class TelegramController {
         final Invocation invocation = new Invocation(invocationText);
         final long chatId = update.getMessage().getChat().getId();
 
-        Response response = invocationProcessor.process(invocation);
+        Response response = mainInvocationProcessor.process(invocation);
 
         OutgoingMessage outgoingMessage = new OutgoingMessage(
                 chatId,
