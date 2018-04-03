@@ -4,24 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xyz.deseteral.phobot.invocation.model.Invocation;
 import xyz.deseteral.phobot.invocation.model.Response;
-import xyz.deseteral.phobot.modules.PingModule;
+
+import java.util.List;
 
 @Component
 public class MainInvocationProcessor {
-    private final PingModule pingModule;
+    private final List<InvocationProcessor> invocationProcessors;
 
     @Autowired
-    public MainInvocationProcessor(PingModule pingModule) {
-        this.pingModule = pingModule;
+    public MainInvocationProcessor(List<InvocationProcessor> invocationProcessors) {
+        this.invocationProcessors = invocationProcessors;
     }
 
     public Response process(Invocation invocation) {
-        if (pingModule.doesInvocationQualify(invocation)) {
-            return pingModule.process(invocation);
-        }
+        return invocationProcessors
+                .stream()
+                .filter(processor -> processor.doesInvocationQualify(invocation))
+                .findFirst()
+                .map(processor -> processor.process(invocation))
+                .orElseGet(MainInvocationProcessor::getDefaultResponse);
+    }
 
-        return new Response(
-                "I don't know anything about that."
-        );
+    private static Response getDefaultResponse() {
+        return new Response("I don't know anything about that.");
     }
 }
